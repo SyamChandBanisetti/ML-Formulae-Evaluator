@@ -1,11 +1,14 @@
 import pytesseract
 from PIL import Image
 import google.generativeai as genai
+from dotenv import load_dotenv
+import os
 
-# Hardcoded Gemini API key
-API_KEY = "API_KEY"  # 👈 Replace with your real key
+# Load API key from .env file
+load_dotenv()
+API_KEY = os.getenv("GEMINI_API_KEY")
 
-# Configure Gemini once
+# Configure Gemini
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-pro")
 
@@ -15,7 +18,7 @@ def extract_text_from_image(image_file):
     text = pytesseract.image_to_string(img)
     return text.strip()
 
-# Gemini prompt for evaluating formulas
+# Evaluate formulas
 def evaluate_formulas(user_text):
     prompt = f"""
     A user submitted formulas for accuracy, precision, recall, and F1-score in machine learning.
